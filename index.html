@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boeing F-47 — Air Dominance Redefined</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c8a84b;
+    --gold-light: #e8c96b;
+    --electric: #00d4ff;
+    --electric-dim: #007a99;
+    --red: #ff3c3c;
+    --dark: #04080f;
+    --dark2: #080e1a;
+    --dark3: #0d1525;
+    --panel: #0a1020cc;
+    --text: #c8d4e8;
+    --text-dim: #6a7a99;
+    --border: #1a2a44;
+    --border-gold: #c8a84b44;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 0 6vw 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, #00000000 0%, #04080fee 70%),
+      linear-gradient(to right, #04080fff 0%, #04080f88 50%, #04080f00 100%);
+    z-index: 1;
+  }
+
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    background: url('https://wallpapercave.com/wp/wp5188399.jpg') center/cover no-repeat;
+    filter: saturate(0.4) brightness(0.6);
+    z-index: 0;
+    animation: subtlePan 30s ease-in-out infinite alternate;
+  }
+
+  @keyframes subtlePan {
+    from { transform: scale(1.05) translateX(0); }
+    to   { transform: scale(1.12) translateX(-3%); }
+  }
+
+  .hero-scan {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--electric), transparent);
+    animation: scan 6s linear infinite;
+    z-index: 2;
+  }
+
+  @keyframes scan {
+    from { top: 0; opacity: 1; }
+    to   { top: 100%; opacity: 0; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    max-width: 900px;
+  }
+
+  .hero-tag {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--electric);
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 14vw, 160px);
+    line-height: 0.9;
+    color: #fff;
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-title span {
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 300;
+    color: var(--text-dim);
+    margin-top: 20px;
+    max-width: 600px;
+    line-height: 1.5;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s forwards;
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.2s forwards;
+  }
+
+  .badge {
+    background: var(--border);
+    border: 1px solid var(--border-gold);
+    color: var(--gold);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    padding: 8px 16px;
+    text-transform: uppercase;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    right: 6vw;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-dim);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    animation: pulse 2s infinite;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--electric), transparent);
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  /* ─── SECTION STRUCTURE ─── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 6vw;
+  }
+
+  .section-label {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--electric);
+    font-size: 0.72rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(38px, 6vw, 72px);
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 48px;
+  }
+
+  .section-title em {
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0;
+  }
+
+  /* ─── INTRO STRIP ─── */
+  .intro-strip {
+    background: var(--dark3);
+    border-top: 1px solid var(--border-gold);
+    border-bottom: 1px solid var(--border-gold);
+    padding: 48px 6vw;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .stat-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .stat-block .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 5vw, 64px);
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-block .label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  /* ─── AIRCRAFT PROFILE ─── */
+  .aircraft-profiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .profile-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--dark2);
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 48px 40px;
+    transition: all 0.4s ease;
+  }
+
+  .profile-card:hover .profile-overlay {
+    opacity: 0.4;
+  }
+
+  .profile-card:hover .profile-img {
+    transform: scale(1.04);
+  }
+
+  .profile-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s ease;
+    filter: saturate(0.5) brightness(0.55);
+  }
+
+  .profile-img.f47 {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/F-47_Thunderbolt_%28NGAD%29.jpg/1280px-F-47_Thunderbolt_%28NGAD%29.jpg');
+    background-color: #0d1525;
+  }
+
+  .profile-img.f22 {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/F-22_Raptor_Shooting_Flares.jpg/1280px-F-22_Raptor_Shooting_Flares.jpg');
+    background-color: #0a1020;
+  }
+
+  .profile-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, var(--dark) 0%, transparent 60%);
+    z-index: 1;
+    opacity: 0.7;
+    transition: opacity 0.4s;
+  }
+
+  .profile-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .profile-gen {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 4px;
+    color: var(--electric);
+    margin-bottom: 8px;
+  }
+
+  .profile-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 5.5vw, 72px);
+    color: #fff;
+    line-height: 1;
+  }
+
+  .profile-sub {
+    color: var(--gold);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+
+  .profile-desc {
+    margin-top: 16px;
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-width: 440px;
+  }
+
+  .profile-quickstats {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .qs {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .qs .v {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+
+  .qs .k {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  /* ─── IMAGES GALLERY ─── */
+  .gallery-section {
+    background: var(--dark2);
+    padding: 80px 6vw;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 260px 260px;
+    gap: 3px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    background: var(--dark3);
+  }
+
+  .gallery-item:first-child {
+    grid-row: 1 / 3;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.6) brightness(0.7);
+    transition: all 0.5s ease;
+  }
+
+  .gallery-item:hover img {
+    filter: saturate(0.9) brightness(0.85);
+    transform: scale(1.04);
+  }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(4,8,15,0.9));
+    padding: 30px 20px 16px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  .gallery-caption span {
+    color: var(--gold);
+  }
+
+  /* ─── COMPARISON TABLE ─── */
+  .table-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+
+  thead tr {
+    border-bottom: 2px solid var(--gold);
+  }
+
+  thead th {
+    padding: 20px 24px;
+    text-align: left;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    background: var(--dark3);
+  }
+
+  thead th.col-f47 {
+    color: var(--gold);
+    background: #1a1200;
+    font-size: 1.1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 3px;
+  }
+
+  thead th.col-f22 {
+    color: var(--electric);
+    background: #001a22;
+    font-size: 1.1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 3px;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  tbody tr:hover {
+    background: rgba(200,168,75,0.04);
+  }
+
+  tbody tr:hover td.col-f47 { background: rgba(200,168,75,0.06); }
+  tbody tr:hover td.col-f22 { background: rgba(0,212,255,0.06); }
+
+  tbody tr.section-row td {
+    padding: 12px 24px 6px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--electric);
+    background: var(--dark3);
+    border-top: 1px solid var(--border);
+  }
+
+  td {
+    padding: 15px 24px;
+    vertical-align: middle;
+    line-height: 1.4;
+  }
+
+  td.col-label {
+    color: var(--text-dim);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+    width: 22%;
+  }
+
+  td.col-f47 {
+    color: var(--gold-light);
+    font-weight: 600;
+    background: rgba(200,168,75,0.025);
+    font-size: 1rem;
+  }
+
+  td.col-f22 {
+    color: #8ecde0;
+    font-weight: 600;
+    background: rgba(0,212,255,0.025);
+    font-size: 1rem;
+  }
+
+  .advantage-f47 td.col-f47::before {
+    content: '▲ ';
+    color: var(--gold);
+    font-size: 0.8em;
+  }
+
+  .advantage-f22 td.col-f22::before {
+    content: '★ ';
+    color: var(--electric);
+    font-size: 0.8em;
+  }
+
+  /* ─── CAPABILITY BARS ─── */
+  .capability-section {
+    background: var(--dark2);
+  }
+
+  .cap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .cap-group h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 32px;
+    letter-spacing: 2px;
+  }
+
+  .cap-group.f47 h3 { color: var(--gold); }
+  .cap-group.f22 h3 { color: var(--electric); }
+
+  .cap-bar-item {
+    margin-bottom: 24px;
+  }
+
+  .cap-bar-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .cap-bar-header .score {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .cap-bar-track {
+    height: 6px;
+    background: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cap-bar-fill {
+    height: 100%;
+    width: 0;
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .f47-fill { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+  .f22-fill { background: linear-gradient(90deg, var(--electric-dim), var(--electric)); }
+
+  /* ─── TIMELINE ─── */
+  .timeline-list {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 60px;
+  }
+
+  .timeline-list::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--electric), var(--gold), transparent);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 44px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.6s ease;
+  }
+
+  .tl-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .tl-dot {
+    position: absolute;
+    left: -49px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    background: var(--gold);
+    border: 2px solid var(--dark);
+    box-shadow: 0 0 12px var(--gold);
+    transform: rotate(45deg);
+  }
+
+  .tl-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .tl-text {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-top: 4px;
+  }
+
+  .tl-text strong { color: var(--text); }
+
+  /* ─── CCA SECTION ─── */
+  .cca-section {
+    background: var(--dark3);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cca-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    max-width: 1200px;
+    margin: 0 auto 60px;
+  }
+
+  .cca-card {
+    background: var(--dark2);
+    padding: 36px 28px;
+    border-top: 3px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .cca-card:hover {
+    background: #0a1428;
+    border-top-color: var(--gold);
+  }
+
+  .cca-card .cca-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .cca-card h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+
+  .cca-card p {
+    color: var(--text-dim);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  /* ─── COST SECTION ─── */
+  .cost-section { background: var(--dark); }
+
+  .cost-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .cost-bar-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .cost-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    width: 160px;
+    flex-shrink: 0;
+  }
+
+  .cost-track {
+    flex: 1;
+    height: 28px;
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cost-fill {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 0;
+  }
+
+  .cost-f47 { background: linear-gradient(90deg, #3d2500, var(--gold)); color: var(--dark); }
+  .cost-f22 { background: linear-gradient(90deg, #001d2a, var(--electric)); color: var(--dark); }
+  .cost-cca { background: linear-gradient(90deg, #001a00, #00cc44); color: var(--dark); }
+
+  /* ─── QUOTE BLOCK ─── */
+  .quote-block {
+    background: linear-gradient(135deg, var(--dark3), var(--dark2));
+    border-left: 4px solid var(--gold);
+    padding: 40px 48px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .quote-block::before {
+    content: '"';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 8rem;
+    color: var(--gold);
+    opacity: 0.15;
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    line-height: 1;
+  }
+
+  .quote-text {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.7;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+  }
+
+  .quote-attr {
+    margin-top: 20px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: var(--electric);
+    text-transform: uppercase;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark3);
+    border-top: 1px solid var(--border-gold);
+    padding: 48px 6vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+    position: relative;
+    z-index: 1;
+    gap: 24px;
+  }
+
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    letter-spacing: 4px;
+  }
+
+  .footer-info {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    text-align: right;
+  }
+
+  /* ─── CLASSIFIED WATERMARK ─── */
+  .classified-banner {
+    background: repeating-linear-gradient(
+      -45deg,
+      #ff3c3c08, #ff3c3c08 10px,
+      transparent 10px, transparent 20px
+    );
+    border: 1px solid #ff3c3c33;
+    padding: 10px 24px;
+    text-align: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 6px;
+    color: #ff3c3c88;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── GLITCH TEXT EFFECT ─── */
+  @keyframes glitch {
+    0%   { clip-path: polygon(0 20%, 100% 20%, 100% 30%, 0 30%); transform: translate(-2px); }
+    20%  { clip-path: polygon(0 60%, 100% 60%, 100% 65%, 0 65%); transform: translate(2px); }
+    40%  { clip-path: polygon(0 40%, 100% 40%, 100% 55%, 0 55%); transform: translate(-1px); }
+    60%  { clip-path: polygon(0 80%, 100% 80%, 100% 85%, 0 85%); transform: translate(1px); }
+    80%  { clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%); transform: translate(-2px); }
+    100% { clip-path: none; transform: translate(0); }
+  }
+
+  .glitch {
+    position: relative;
+    display: inline-block;
+  }
+
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 2px;
+    top: 0;
+    color: var(--electric);
+    opacity: 0.3;
+    animation: glitch 4s 2s infinite;
+    pointer-events: none;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .aircraft-profiles { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gallery-item:first-child { grid-row: auto; grid-column: 1 / -1; height: 260px; }
+    .cap-grid { grid-template-columns: 1fr; }
+    .cca-grid { grid-template-columns: 1fr; }
+    .hero-title { font-size: 72px; }
+    footer { flex-direction: column; text-align: center; }
+    .footer-info { text-align: center; }
+    table { font-size: 0.82rem; }
+    td { padding: 12px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CLASSIFIED BANNER -->
+<div class="classified-banner">⬛ UNCLASSIFIED // FOR OFFICIAL USE ONLY — PROGRAM: NEXT GENERATION AIR DOMINANCE ⬛</div>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-image"></div>
+  <div class="hero-bg"></div>
+  <div class="hero-scan"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">// Boeing Defense — NGAD Program — Designation F-47 — 2025</div>
+    <h1 class="hero-title">
+      BOEING
+      <span class="glitch" data-text="F-47">F-47</span>
+    </h1>
+    <p class="hero-sub">America's first sixth-generation fighter. The aircraft that will define air superiority for the next fifty years — and the end of an era for the F-22 Raptor.</p>
+    <div class="hero-badges">
+      <span class="badge">6th Generation</span>
+      <span class="badge">Contract: $20B+</span>
+      <span class="badge">First Flight: 2028</span>
+      <span class="badge">CCA Capable</span>
+      <span class="badge">Tailless Stealth</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">SCROLL</div>
+</section>
+
+<!-- ─── STATS STRIP ─── -->
+<div class="intro-strip">
+  <div class="stat-block">
+    <div class="num">1,000<span style="font-size:0.5em;color:var(--text-dim)">+ nmi</span></div>
+    <div class="label">Combat Radius</div>
+  </div>
+  <div class="stat-block">
+    <div class="num">Mach 2<span style="font-size:0.5em;color:var(--text-dim)">+</span></div>
+    <div class="label">Top Speed</div>
+  </div>
+  <div class="stat-block">
+    <div class="num">$20<span style="font-size:0.5em;color:var(--text-dim)">B</span></div>
+    <div class="label">Development Contract</div>
+  </div>
+  <div class="stat-block">
+    <div class="num">1,000<span style="font-size:0.5em;color:var(--text-dim)">+</span></div>
+    <div class="label">CCA Drone Wingmen Planned</div>
+  </div>
+  <div class="stat-block">
+    <div class="num">185<span style="font-size:0.5em;color:var(--text-dim)">+</span></div>
+    <div class="label">Planned Aircraft</div>
+  </div>
+  <div class="stat-block">
+    <div class="num">2028</div>
+    <div class="label">First Flight Target</div>
+  </div>
+</div>
+
+<!-- ─── AIRCRAFT PROFILES ─── -->
+<section>
+  <div class="section-label">// Aircraft Profiles</div>
+  <div class="section-title">The <em>Challenger</em> vs The <em>Champion</em></div>
+
+  <div class="aircraft-profiles reveal">
+    <!-- F-47 -->
+    <div class="profile-card">
+      <div class="profile-img f47" style="background-image: url('https://media.defense.gov/2025/Mar/21/2003674021/-1/-1/0/250321-F-AF000-1341.JPG'), linear-gradient(135deg, #1a1200, #0d1525);"></div>
+      <div class="profile-overlay"></div>
+      <div class="profile-content">
+        <div class="profile-gen">// 6th Generation — 2029 IOC</div>
+        <div class="profile-name">F-47</div>
+        <div class="profile-sub">Boeing — NGAD — Thunderbolt III</div>
+        <p class="profile-desc">A tailless, twin-engine stealth platform built as a command node for autonomous drone swarms. Bomber-class stealth with fighter speed. Designed to dominate the Pacific theater's vast distances that cripple the F-22.</p>
+        <div class="profile-quickstats">
+          <div class="qs">
+            <div class="v">&gt;1,000</div>
+            <div class="k">Radius (nmi)</div>
+          </div>
+          <div class="qs">
+            <div class="v">M2+</div>
+            <div class="k">Top Speed</div>
+          </div>
+          <div class="qs">
+            <div class="v">~$300M</div>
+            <div class="k">Est. Unit Cost</div>
+          </div>
+          <div class="qs">
+            <div class="v">2+</div>
+            <div class="k">CCA Wingmen</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- F-22 -->
+    <div class="profile-card">
+      <div class="profile-img f22" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/F-22_Raptor_Shooting_Flares.jpg/1200px-F-22_Raptor_Shooting_Flares.jpg'), linear-gradient(135deg, #001a22, #0a1020);"></div>
+      <div class="profile-overlay" style="background: linear-gradient(to top, #04080f 0%, transparent 60%);"></div>
+      <div class="profile-content">
+        <div class="profile-gen" style="color: var(--electric);">// 5th Generation — IOC 2005</div>
+        <div class="profile-name">F-22</div>
+        <div class="profile-sub" style="color: var(--electric);">Lockheed Martin — Raptor</div>
+        <p class="profile-desc">The undisputed king of air superiority for two decades. Its twin-tail twin-engine configuration, supercruise capability, and AESA radar redefined what a fighter could be. Now approaching the end of its dominance era.</p>
+        <div class="profile-quickstats">
+          <div class="qs">
+            <div class="v" style="color: #8ecde0;">~410</div>
+            <div class="k">Radius (nmi)</div>
+          </div>
+          <div class="qs">
+            <div class="v" style="color: #8ecde0;">M2.25</div>
+            <div class="k">Top Speed</div>
+          </div>
+          <div class="qs">
+            <div class="v" style="color: #8ecde0;">$150M</div>
+            <div class="k">Unit Cost</div>
+          </div>
+          <div class="qs">
+            <div class="v" style="color: #8ecde0;">187</div>
+            <div class="k">Built</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GALLERY ─── -->
+<div class="gallery-section">
+  <div class="section-label" style="margin-bottom:32px;">// Imagery — Official DoD Renders &amp; USAF Photography</div>
+
+  <div class="gallery-grid reveal">
+    <div class="gallery-item">
+      <img src="https://media.defense.gov/2025/Mar/21/2003674021/-1/-1/0/250321-F-AF000-1341.JPG"
+           onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #1a1200, #0a0800)'; this.parentElement.innerHTML += '<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-family:Bebas Neue,sans-serif;font-size:4rem;color:#c8a84b22;letter-spacing:4px;\'>F-47 CLASSIFIED</div>'"
+           alt="F-47 NGAD Official DoD Render — March 21, 2025"
+           style="height: 100%; object-fit: cover;">
+      <div class="gallery-caption"><span>F-47 NGAD</span> — Official DoD Render, March 21 2025<br>Note: Imagery intentionally altered to conceal true design</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/F-22_Raptor_Shooting_Flares.jpg/800px-F-22_Raptor_Shooting_Flares.jpg"
+           alt="F-22 Raptor firing flares" style="height:100%;object-fit:cover;">
+      <div class="gallery-caption"><span>F-22 RAPTOR</span> — Countermeasure deployment</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/F-22_Raptor_edit1_%28cropped%29.jpg/800px-F-22_Raptor_edit1_%28cropped%29.jpg"
+           alt="F-22 Raptor in flight" style="height:100%;object-fit:cover;">
+      <div class="gallery-caption"><span>F-22 RAPTOR</span> — Air superiority profile</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://media.defense.gov/2025/Mar/21/2003674119/-1/-1/0/250321-F-AF000-1513.JPG"
+           onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/F-22_Raptor_Landing_%28Taken_by_Airman_1st_Class_Gustavo_Castillo%29.jpg/800px-F-22_Raptor_Landing_%28Taken_by_Airman_1st_Class_Gustavo_Castillo%29.jpg'"
+           alt="F-47 Second Render" style="height:100%;object-fit:cover;">
+      <div class="gallery-caption"><span>F-47 NGAD</span> — Alternate render angle</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/F-22A_Raptor_landing_at_Nellis_AFB.jpg/800px-F-22A_Raptor_landing_at_Nellis_AFB.jpg"
+           onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/F-22_Raptor_Shooting_Flares.jpg/400px-F-22_Raptor_Shooting_Flares.jpg'"
+           alt="F-22 Raptor at Nellis AFB" style="height:100%;object-fit:cover;">
+      <div class="gallery-caption"><span>F-22 RAPTOR</span> — Nellis AFB operations</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ─── CAPABILITY BARS ─── -->
+<section class="capability-section">
+  <div class="section-label">// Capability Assessment</div>
+  <div class="section-title"><em>Performance</em> Comparison</div>
+
+  <div class="cap-grid reveal" id="cap-grid">
+    <div class="cap-group f47">
+      <h3>F-47 NGAD</h3>
+
+      <div class="cap-bar-item">
+        <div class="cap-bar-header">
+          <span>Stealth / Low-Observability</span>
+          <span class="score">98/100</span>
+        </div>
+        <div class="cap-bar-track">
+          <div class="cap-bar-fill f47-fill" data-width="98%"></div>
+        </div>
+      </div>
+
+      <div class="cap-bar-item">
+        <div class="cap-bar-header">
+          <span>Combat Radius</span>
+          <span class="score">95/100</span>
+        </div>
+        <div class="cap-bar-track">
+          <div class="cap-bar-fill f47-fill" data-width="95%"></div>
+        </div>
+      </div>
+
+      <div class="cap-bar-item">
+        <div class="cap-bar-header">
+          <span>Drone Command / MUMT</span>
+          <span class="score">100/100</span>
+        </div>
+        <div class="cap-bar-track">
+          <div class="cap-bar-fill f47-fill" data-width="100%"></div>
+        </div>
+      </div>
+
+      <div class="cap-bar-item">
+        <div class="cap-bar-header">
+          <span>Adaptive Propulsion</span>
+          <span class="score">95/100</span>
+        </div>
+        <div class="cap-bar-track">
+          <div class="cap-bar-fill f47-fill" data-width="95%"></div>
+        </div>
+      </div>
+
+      <div class="cap-bar-item">
+        <div class="cap-bar-header">
+          <span>Electronic Warfare</span>
+          <span class="score">90/100</span>
+        </div>
+        <div class="cap-bar-track">
+          <div class="cap-bar-fill f47-fill" data-width="90%"></div>
+        </div>
+      </div>
+
+      <div class="cap-bar-item">
+        <div class="cap-bar-header">
+          <span>Dogfight / Close Air Combat</span>
+          <span class="score">82/100</span>
+        </div>
+        <div class="cap-bar-track">
+          <div class="cap-bar-fill f47-fill" data-width="82%"></div>
+        </div>
+      </div>
+
+      <div class="cap-bar-item">
+        <div class="cap-bar-header">
+          <span>Operational Availability</span>
+          <span class="score">85/100</span>
+        </div>
+        <div class="cap-bar-track">
+          <div class="cap-bar-fill f47-fill" data-width="85%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cap-group f22">
+      <h3>F-22 Raptor</h3>
+
+      <div class="cap-bar-item">
+        <div class="cap-bar-header">
+          <span>Stealth / Low-Observability</span>
+          <span class="score">93/100</span>
+        </div>
+        <div class="cap-bar-track">
+          <div class="cap-bar-fill f22-fill" data-width="93%"></div>
+        </div>
+      </div>
+
+      <div class="cap-bar-item">
+        <div class="cap-bar-header">
+          <span>Combat Radius</span>
+          <span class="score">52/100</span>
+        </div>
+        <div class="cap-bar-track">
+          <div class="cap-bar-fill f22-fill" data-width="52%"></div>
+        </div>
+      </div>
+
+      <div class="cap-bar-item">
+        <div class="cap-bar-header">
+          <span>Drone Command / MUMT</span>
+          <span class="score">35/100</span>
+        </div>
+        <div class="cap-bar-track">
+          <div class="cap-bar-fill f22-fill" data-width="35%"></div>
+        </div>
+      </div>
+
+      <div class="cap-bar-item">
+        <div class="cap-bar-header">
+          <span>Adaptive Propulsion</span>
+          <span class="score">68/100</span>
+        </div>
+        <div class="cap-bar-track">
+          <div class="cap-bar-fill f22-fill" data-width="68%"></div>
+        </div>
+      </div>
+
+      <div class="cap-bar-item">
+        <div class="cap-bar-header">
+          <span>Electronic Warfare</span>
+          <span class="score">88/100</span>
+        </div>
+        <div class="cap-bar-track">
+          <div class="cap-bar-fill f22-fill" data-width="88%"></div>
+        </div>
+      </div>
+
+      <div class="cap-bar-item">
+        <div class="cap-bar-header">
+          <span>Dogfight / Close Air Combat</span>
+          <span class="score">97/100</span>
+        </div>
+        <div class="cap-bar-track">
+          <div class="cap-bar-fill f22-fill" data-width="97%"></div>
+        </div>
+      </div>
+
+      <div class="cap-bar-item">
+        <div class="cap-bar-header">
+          <span>Operational Availability</span>
+          <span class="score">40/100</span>
+        </div>
+        <div class="cap-bar-track">
+          <div class="cap-bar-fill f22-fill" data-width="40%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── COMPARISON TABLE ─── -->
+<section>
+  <div class="section-label">// Specification Matrix</div>
+  <div class="section-title">Head-to-Head <em>Comparison</em></div>
+
+  <div class="table-wrap reveal">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:24%">Specification</th>
+          <th class="col-f47">F-47 NGAD</th>
+          <th class="col-f22">F-22 Raptor</th>
+          <th style="width:14%;color:var(--text-dim);">Edge</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="section-row"><td colspan="4">IDENTIFICATION</td></tr>
+        <tr>
+          <td class="col-label">Generation</td>
+          <td class="col-f47">6th Generation</td>
+          <td class="col-f22">5th Generation</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+        <tr>
+          <td class="col-label">Manufacturer</td>
+          <td class="col-f47">Boeing Defense</td>
+          <td class="col-f22">Lockheed Martin / Boeing</td>
+          <td style="color:var(--text-dim)">—</td>
+        </tr>
+        <tr>
+          <td class="col-label">Crew</td>
+          <td class="col-f47">1 Pilot</td>
+          <td class="col-f22">1 Pilot</td>
+          <td style="color:var(--text-dim)">Tie</td>
+        </tr>
+        <tr>
+          <td class="col-label">Configuration</td>
+          <td class="col-f47">Tailless blended wing-body</td>
+          <td class="col-f22">Twin-tail, trapezoidal wing</td>
+          <td style="color:var(--gold)">F-47 (stealth)</td>
+        </tr>
+
+        <tr class="section-row"><td colspan="4">PERFORMANCE</td></tr>
+        <tr class="advantage-f22">
+          <td class="col-label">Top Speed</td>
+          <td class="col-f47">Mach 2+ (classified)</td>
+          <td class="col-f22">Mach 2.25+ (est.)</td>
+          <td style="color:var(--electric)">F-22</td>
+        </tr>
+        <tr>
+          <td class="col-label">Supercruise</td>
+          <td class="col-f47">Yes — enhanced (adaptive cycle)</td>
+          <td class="col-f22">Mach 1.5+ (demo: &gt;1.7)</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+        <tr class="advantage-f47">
+          <td class="col-label">Combat Radius</td>
+          <td class="col-f47">&gt;1,000 nautical miles</td>
+          <td class="col-f22">~410 nautical miles</td>
+          <td style="color:var(--gold)">F-47 ×2.4</td>
+        </tr>
+        <tr>
+          <td class="col-label">Service Ceiling</td>
+          <td class="col-f47">Classified</td>
+          <td class="col-f22">65,000 ft (19,812 m)</td>
+          <td style="color:var(--text-dim)">—</td>
+        </tr>
+
+        <tr class="section-row"><td colspan="4">PROPULSION</td></tr>
+        <tr>
+          <td class="col-label">Engine Type</td>
+          <td class="col-f47">2× Adaptive cycle (XA102 or XA103)</td>
+          <td class="col-f22">2× P&amp;W F119-PW-100</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+        <tr>
+          <td class="col-label">Thrust (each)</td>
+          <td class="col-f47">Est. 45,000+ lb class</td>
+          <td class="col-f22">35,000+ lb with afterburner</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+        <tr>
+          <td class="col-label">Fuel Efficiency</td>
+          <td class="col-f47">+25% vs fixed-cycle (adaptive)</td>
+          <td class="col-f22">Baseline</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+        <tr>
+          <td class="col-label">Cooling Capacity</td>
+          <td class="col-f47">2× current (directed-energy ready)</td>
+          <td class="col-f22">Baseline</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+
+        <tr class="section-row"><td colspan="4">STEALTH &amp; SURVIVABILITY</td></tr>
+        <tr>
+          <td class="col-label">Stealth Standard</td>
+          <td class="col-f47">All-aspect broadband LO — exceeds F-22</td>
+          <td class="col-f22">~0.0001 m² frontal RCS</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+        <tr>
+          <td class="col-label">IR Signature</td>
+          <td class="col-f47">Drastically reduced (adaptive cooling)</td>
+          <td class="col-f22">Standard 5th-gen suppression</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+        <tr>
+          <td class="col-label">Vertical Tails</td>
+          <td class="col-f47">None (major RCS reduction)</td>
+          <td class="col-f22">Twin canted tails</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+
+        <tr class="section-row"><td colspan="4">AVIONICS &amp; SYSTEMS</td></tr>
+        <tr>
+          <td class="col-label">Primary Radar</td>
+          <td class="col-f47">Next-gen AESA (classified)</td>
+          <td class="col-f22">AN/APG-77 (1,956 T/R modules)</td>
+          <td style="color:var(--gold)">F-47 (est.)</td>
+        </tr>
+        <tr class="advantage-f22">
+          <td class="col-label">EW System</td>
+          <td class="col-f47">Classified next-gen suite</td>
+          <td class="col-f22">AN/ALR-94 — 250+ nmi detection</td>
+          <td style="color:var(--text-dim)">Unknown</td>
+        </tr>
+        <tr>
+          <td class="col-label">AI Integration</td>
+          <td class="col-f47">Native — decision support &amp; CCA command</td>
+          <td class="col-f22">Limited (retrofit programs)</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+        <tr class="advantage-f47">
+          <td class="col-label">Drone Teaming (MUMT)</td>
+          <td class="col-f47">Native — commands 2+ CCAs</td>
+          <td class="col-f22">Retrofitted (testing phase)</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+
+        <tr class="section-row"><td colspan="4">ARMAMENT</td></tr>
+        <tr>
+          <td class="col-label">A-A Missiles</td>
+          <td class="col-f47">AIM-260 JATM, AIM-174B expected</td>
+          <td class="col-f22">6× AIM-120C + 2× AIM-9X</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+        <tr class="advantage-f22">
+          <td class="col-label">Gun</td>
+          <td class="col-f47">20mm cannon (unconfirmed)</td>
+          <td class="col-f22">M61A2 Vulcan 20mm, 480 rds</td>
+          <td style="color:var(--electric)">F-22</td>
+        </tr>
+        <tr>
+          <td class="col-label">Air-to-Ground</td>
+          <td class="col-f47">AGM-158D JASSM-XR expected</td>
+          <td class="col-f22">2× JDAM or 8× SDB</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+        <tr>
+          <td class="col-label">Directed Energy</td>
+          <td class="col-f47">Future-ready (thermal budget built in)</td>
+          <td class="col-f22">No provision</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+
+        <tr class="section-row"><td colspan="4">PROGRAM &amp; COST</td></tr>
+        <tr>
+          <td class="col-label">Unit Flyaway Cost</td>
+          <td class="col-f47">~$300M (est.) / USAF claims &lt;F-22</td>
+          <td class="col-f22">~$150M flyaway / $350M w/ R&amp;D</td>
+          <td style="color:var(--electric)">F-22</td>
+        </tr>
+        <tr>
+          <td class="col-label">Fleet Size</td>
+          <td class="col-f47">185+ (planned)</td>
+          <td class="col-f22">187 (production ended 2011)</td>
+          <td style="color:var(--text-dim)">Similar</td>
+        </tr>
+        <tr>
+          <td class="col-label">Mission Capable Rate</td>
+          <td class="col-f47">Projected significantly higher</td>
+          <td class="col-f22">~40% (as of 2024)</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+        <tr>
+          <td class="col-label">Export Status</td>
+          <td class="col-f47">Possible (allied "toned-down" versions)</td>
+          <td class="col-f22">Prohibited by U.S. law</td>
+          <td style="color:var(--gold)">F-47</td>
+        </tr>
+        <tr>
+          <td class="col-label">First Flight</td>
+          <td class="col-f47">2028 (targeted)</td>
+          <td class="col-f22">September 7, 1997</td>
+          <td style="color:var(--text-dim)">—</td>
+        </tr>
+        <tr>
+          <td class="col-label">IOC</td>
+          <td class="col-f47">~2029</td>
+          <td class="col-f22">December 15, 2005</td>
+          <td style="color:var(--text-dim)">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── COST VISUALIZATION ─── -->
+<section class="cost-section">
+  <div class="section-label">// Program Economics</div>
+  <div class="section-title">The <em>Price</em> of Air Dominance</div>
+
+  <div class="cost-bars reveal" id="cost-bars">
+    <div class="cost-bar-item">
+      <div class="cost-label">F-47 Unit Cost</div>
+      <div class="cost-track">
+        <div class="cost-fill cost-f47" data-width="100%" style="width:0">~$300M per aircraft</div>
+      </div>
+    </div>
+    <div class="cost-bar-item">
+      <div class="cost-label">F-22 Unit Cost</div>
+      <div class="cost-track">
+        <div class="cost-fill cost-f22" data-width="50%" style="width:0">~$150M per aircraft</div>
+      </div>
+    </div>
+    <div class="cost-bar-item">
+      <div class="cost-label">CCA Drone</div>
+      <div class="cost-track">
+        <div class="cost-fill cost-cca" data-width="9%" style="width:0">~$27M</div>
+      </div>
+    </div>
+    <div class="cost-bar-item">
+      <div class="cost-label">5-Year Program</div>
+      <div class="cost-track">
+        <div class="cost-fill cost-f47" data-width="95%" style="width:0">$28.5B — F-47 + CCA combined</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 60px; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <div class="quote-block reveal">
+      <p class="quote-text">The F-47 will have significantly longer range, more advanced stealth, be more sustainable, supportable, and have higher availability than our fifth-generation fighters. This platform is designed with a 'built to adapt' mindset and will take significantly less manpower and infrastructure to deploy.</p>
+      <div class="quote-attr">— Gen. David Allvin, Chief of Staff, United States Air Force</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── CCA / DRONE SECTION ─── -->
+<section class="cca-section">
+  <div class="section-label">// Collaborative Combat Aircraft — The Multiplier</div>
+  <div class="section-title">F-47's <em>Drone Wingmen</em></div>
+
+  <p style="max-width:800px;color:var(--text-dim);font-size:1.05rem;line-height:1.7;margin-bottom:52px;">The F-47's most revolutionary capability is its native ability to command multiple autonomous drone wingmen — a paradigm the F-22 cannot match without costly retrofit programs. Each F-47 operates as a "quarterback," directing a wolfpack of CCAs that extend its sensor reach, magazine depth, and electronic warfare presence across a massive battlespace.</p>
+
+  <div class="cca-grid reveal">
+    <div class="cca-card">
+      <div class="cca-icon">YFQ-42A</div>
+      <h4>General Atomics — Dark Merlin</h4>
+      <p>First CCA type to complete initial flight testing (August 2025). Designed for high-end contested environments, competing for the USAF Increment 1 CCA contract alongside Anduril's Fury. Optimized for adversary air operations alongside the F-47.</p>
+    </div>
+    <div class="cca-card">
+      <div class="cca-icon">YFQ-44A</div>
+      <h4>Anduril Industries — Fury</h4>
+      <p>Remarkable development speed: 556 days from clean-sheet design to first flight (October 2025). Anduril's AI-first approach and software-defined architecture could set a new benchmark for autonomous combat aircraft development velocity.</p>
+    </div>
+    <div class="cca-card">
+      <div class="cca-icon">1,000+</div>
+      <h4>Planned Fleet — The Swarm</h4>
+      <p>The USAF plans to acquire over 1,000 CCAs at ~$25–30M each, pairing roughly two drones with every F-47 and F-35A in the fleet. At this scale, CCAs multiply combat power by a factor of 3× per manned aircraft and fundamentally alter attrition economics in contested airspace.</p>
+    </div>
+  </div>
+
+  <!-- CCA Diagram -->
+  <div style="max-width: 1000px; margin: 0 auto; background: var(--dark2); border: 1px solid var(--border); padding: 48px; text-align: center;" class="reveal">
+    <div style="font-family:'Share Tech Mono',monospace;font-size:0.7rem;letter-spacing:4px;color:var(--electric);margin-bottom:32px;">// BATTLE FORMATION CONCEPT</div>
+    <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:700px;height:auto;">
+      <!-- Connection lines -->
+      <line x1="400" y1="150" x2="200" y2="80" stroke="#c8a84b44" stroke-width="1" stroke-dasharray="6 4"/>
+      <line x1="400" y1="150" x2="200" y2="220" stroke="#c8a84b44" stroke-width="1" stroke-dasharray="6 4"/>
+      <line x1="400" y1="150" x2="600" y2="80" stroke="#c8a84b44" stroke-width="1" stroke-dasharray="6 4"/>
+      <line x1="400" y1="150" x2="600" y2="220" stroke="#c8a84b44" stroke-width="1" stroke-dasharray="6 4"/>
+
+      <!-- Data links -->
+      <line x1="200" y1="80" x2="600" y2="80" stroke="#00d4ff22" stroke-width="1" stroke-dasharray="3 6"/>
+      <line x1="200" y1="220" x2="600" y2="220" stroke="#00d4ff22" stroke-width="1" stroke-dasharray="3 6"/>
+
+      <!-- F-47 center (diamond shape) -->
+      <polygon points="400,120 430,150 400,180 370,150" fill="#c8a84b" opacity="0.9"/>
+      <polygon points="400,125 425,150 400,175 375,150" fill="#1a1200" opacity="0.6"/>
+      <text x="400" y="200" text-anchor="middle" fill="#c8a84b" font-family="Bebas Neue, sans-serif" font-size="16" letter-spacing="2">F-47</text>
+
+      <!-- CCA nodes -->
+      <circle cx="200" cy="80" r="20" fill="#001a22" stroke="#00d4ff" stroke-width="1.5"/>
+      <text x="200" y="85" text-anchor="middle" fill="#00d4ff" font-family="Share Tech Mono, monospace" font-size="9">CCA-1</text>
+      <text x="200" y="55" text-anchor="middle" fill="#6a7a99" font-family="Share Tech Mono, monospace" font-size="8">SENSOR/EW</text>
+
+      <circle cx="200" cy="220" r="20" fill="#001a22" stroke="#00d4ff" stroke-width="1.5"/>
+      <text x="200" y="225" text-anchor="middle" fill="#00d4ff" font-family="Share Tech Mono, monospace" font-size="9">CCA-2</text>
+      <text x="200" y="250" text-anchor="middle" fill="#6a7a99" font-family="Share Tech Mono, monospace" font-size="8">WEAPONS</text>
+
+      <circle cx="600" cy="80" r="20" fill="#001a22" stroke="#00d4ff" stroke-width="1.5"/>
+      <text x="600" y="85" text-anchor="middle" fill="#00d4ff" font-family="Share Tech Mono, monospace" font-size="9">CCA-3</text>
+      <text x="600" y="55" text-anchor="middle" fill="#6a7a99" font-family="Share Tech Mono, monospace" font-size="8">DECOY</text>
+
+      <circle cx="600" cy="220" r="20" fill="#001a22" stroke="#00d4ff" stroke-width="1.5"/>
+      <text x="600" y="225" text-anchor="middle" fill="#00d4ff" font-family="Share Tech Mono, monospace" font-size="9">CCA-4</text>
+      <text x="600" y="250" text-anchor="middle" fill="#6a7a99" font-family="Share Tech Mono, monospace" font-size="8">STRIKE</text>
+
+      <!-- Stealth bubble -->
+      <ellipse cx="400" cy="150" rx="280" ry="160" fill="none" stroke="#c8a84b" stroke-width="0.5" opacity="0.2" stroke-dasharray="8 4"/>
+      <text x="680" y="155" fill="#c8a84b44" font-family="Share Tech Mono, monospace" font-size="9">LOW OBSERVABLE ZONE</text>
+    </svg>
+    <p style="margin-top:24px;font-family:'Share Tech Mono',monospace;font-size:0.68rem;letter-spacing:2px;color:var(--text-dim);">F-47 AS DISTRIBUTED COMMAND NODE — EACH CCA EXTENDS EFFECTIVE ENGAGEMENT RADIUS AND MAGAZINE DEPTH</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── TIMELINE ─── -->
+<section>
+  <div class="section-label">// Program Chronology</div>
+  <div class="section-title">Road to the <em>F-47</em></div>
+
+  <div class="timeline-list">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">1997</div>
+      <div class="tl-text"><strong>F-22 First Flight.</strong> The Lockheed Martin F-22 makes its engineering manufacturing development first flight on September 7. It will enter operational service in 2005 as the world's first fifth-generation stealth fighter.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2011</div>
+      <div class="tl-text"><strong>F-22 Production Ends.</strong> Congress terminates the program after only 187 of the planned 750 jets — a critical decision that drives future air superiority planning and creates the urgency for a successor.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2014</div>
+      <div class="tl-text"><strong>Air Dominance Initiative.</strong> DARPA publishes the foundational study launching the next-generation air superiority concept. The Air Force's "Air Superiority 2030" flight plan follows in 2016, formally calling for a Penetrating Counter-Air platform.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2019</div>
+      <div class="tl-text"><strong>Secret Demonstrator Flies.</strong> Boeing's DARPA-funded NGAD X-plane completes its first flight — three years before Lockheed's competing demonstrator. This head start ultimately proves decisive in Boeing's 2025 contract win.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2020</div>
+      <div class="tl-text"><strong>Roper Disclosure.</strong> Secretary of the Air Force for Acquisition Will Roper publicly discloses that a full-scale NGAD demonstrator had "broken records" — the most significant public acknowledgment of the classified program.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2024</div>
+      <div class="tl-text"><strong>China's Wake-Up Call.</strong> China flies two sixth-generation prototypes (J-36 and J-50) in December — injecting existential urgency into the NGAD program, which had nearly been paused months earlier over $300M+ unit cost concerns.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--gold);box-shadow:0 0 20px var(--gold);"></div>
+      <div class="tl-year" style="font-size:3rem;">2025</div>
+      <div class="tl-text"><strong style="color:var(--gold);font-size:1.1em;">The F-47 is Born.</strong> March 21, 2025 — President Trump announces Boeing's NGAD contract worth over $20 billion, designating the aircraft the F-47 (honoring the P-47 Thunderbolt, the Air Force's 1947 founding, and the 47th President). Boeing breaks ground on its 1.1M sq ft St. Louis facility. CCA contracts awarded to General Atomics and Anduril.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2025–26</div>
+      <div class="tl-text"><strong>CCA First Flights.</strong> YFQ-42A Dark Merlin (August 2025) and YFQ-44A Fury (October 2025) complete initial flight tests. Pentagon's FY2026 budget goes "all in" on the F-47 with over $4B allocated, while pausing the Navy's own sixth-generation fighter (F/A-XX).</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2028</div>
+      <div class="tl-text"><strong>First Flight.</strong> F-47 prototype targeted to make its public first flight, formally breaking cover after nearly a decade of classified development. Lt. Gen. Dale White confirms the program is "on time and on target" as of early 2026.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2029+</div>
+      <div class="tl-text"><strong>Initial Operational Capability.</strong> The F-47 enters service, beginning the long replacement of the F-22 fleet. Combined with its CCA wingmen fleet of 1,000+ autonomous aircraft, the system reshapes U.S. air power strategy for the Pacific theater and beyond.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ESSAY: DEATH OF THE FIGHTER ─── -->
+<section style="background: var(--dark2); border-top: 1px solid var(--border-gold);">
+  <div class="section-label">// Long-Form Analysis</div>
+  <div class="section-title">The <em>Death</em> of the Fighter</div>
+  <div class="section-label" style="color: var(--text-dim); letter-spacing: 2px; font-size: 0.8rem; margin-top: -36px; margin-bottom: 60px;">An essay on the oldest prophecy in military aviation — and why it keeps being wrong</div>
+
+  <div style="max-width: 820px; margin: 0 auto; font-size: 1.08rem; line-height: 1.85; color: var(--text);">
+
+    <!-- DROP CAP INTRO -->
+    <p style="margin-bottom: 2em;">
+      <span style="font-family: 'Bebas Neue', sans-serif; font-size: 5rem; float: left; line-height: 0.75; margin-right: 12px; margin-top: 8px; color: var(--gold);">E</span>
+      very generation of military planners has been convinced, at some point, that the fighter pilot's era was drawing to a close. The prophecy is older than the jet engine. After World War I, the great airpower theorist Giulio Douhet argued in <em>The Command of the Air</em> (1921) that strategic bombing would decide future wars — that fleets of bombers would render defensive fighters irrelevant because, as British Prime Minister Stanley Baldwin infamously declared in 1932, "the bomber will always get through." The Battle of Britain in 1940 proved him spectacularly wrong. Spitfires and Hurricanes — fighters — saved a nation.
+    </p>
+
+    <p style="margin-bottom: 2em;">
+      The prophecy resurfaced in the 1950s, dressed in the language of the nuclear age. American strategists, entranced by the missile revolution and the advent of radar-guided air-to-air weapons, concluded that the era of turning, dogfighting aerial combat was simply over. Missiles would handle the threat at range. Supersonic speed would prevent close-in engagements. The <strong style="color: #fff;">gun was declared obsolete.</strong> This conviction was institutional, not merely theoretical — it was literally built into metal. The McDonnell F-4 Phantom II, the United States' premier fighter for the Vietnam era, entered service without an internal cannon. Fighters didn't need guns if they could kill at long range.
+    </p>
+
+    <!-- PULL QUOTE -->
+    <div style="border-left: 3px solid var(--gold); padding: 20px 32px; margin: 40px 0; background: rgba(200,168,75,0.04);">
+      <p style="font-size: 1.2rem; font-style: italic; color: var(--text); margin: 0;">"The lack of an internal gun was the biggest mistake on the F-4. Bullets are cheap and tend to go where you aim them. I needed a gun, and I really wished I had one."</p>
+      <p style="margin-top: 12px; font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 3px; color: var(--electric);">— CAPT. CHESIRE, F-4 PHANTOM PILOT, VIETNAM</p>
+      <p style="margin-top: 6px; font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; color: var(--text-dim);">Source: Wikipedia — McDonnell Douglas F-4 Phantom II</p>
+    </div>
+
+    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--gold); letter-spacing: 2px; margin: 48px 0 20px;">Vietnam and the Worst Kill Ratio in American History</h3>
+
+    <p style="margin-bottom: 2em;">
+      The results over North Vietnam were catastrophic. By the end of the Rolling Thunder bombing campaign in 1968, the Phantom traded kills with MiGs at a nearly one-to-one ratio — the worst air combat performance in American history. The reasons were multiple and interlocking. The Phantom fell prey to the Pentagon doctrine that guns were obsolete and that air combat maneuvering was a dead art, made so by the advent of sophisticated new air-to-air missiles. But the AIM-7 Sparrow radar-guided missile achieved only around a 10% success rate in combat. Missiles had to fly a certain distance before they could arm. Electronic countermeasures, violent evasive action, and weather all degraded their performance. F-4 pilots sometimes found themselves in the uncomfortable situation of being too close to the MiGs to use their missiles, or having fired them without effect, only to find themselves well within the MiG's effective gun range.
+    </p>
+
+    <p style="margin-bottom: 2em;">
+      The enemy aircraft — MiG-17s and MiG-21s — were slower than the Phantom but radically more maneuverable. They could out-turn the F-4 in a close-in fight. And crucially, in the early supersonic fighter era, American pilots were not trained in dogfighting tactics. Despite its value in the recent Korean War, dogfighting was not prioritized. The Phantom's design, optimized for nuclear-age long-range intercept, emphasized speed at the expense of agility — exactly what a close-in fight demanded. The institutional assumption that close combat would never happen had produced a fleet of aircraft and pilots that were unprepared for the war they actually found.
+    </p>
+
+    <p style="margin-bottom: 2em;">
+      The response to Vietnam reshaped American military aviation for fifty years. The Navy established the Naval Fighter Weapons School — Top Gun — in 1969 specifically to restore dogfighting proficiency. The years after Vietnam witnessed a host of new technologies, new aircraft with new design philosophies, and new air combat schools such as Top Gun and the Air Force Aggressor Squadron, all emphasizing air-to-air combat. The period also witnessed the rise of the "fighter mafia" as former fighter pilots replaced the old Air Force brass. Out of this crucible came the F-15 Eagle and the F-16 Fighting Falcon — both aircraft with guns, both designed around maneuverability, both still flying front-line missions today.
+    </p>
+
+    <!-- BOYD SECTION -->
+    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--gold); letter-spacing: 2px; margin: 48px 0 20px;">Boyd's Ghost and the OODA Loop</h3>
+
+    <p style="margin-bottom: 2em;">
+      No figure looms larger over the post-Vietnam reinvention of the fighter than Colonel John Boyd. A Korean War F-86 pilot who became the Air Force's foremost theoretician of air combat, Boyd developed two contributions that fundamentally changed how the military understood aerial fighting. The first was his Energy-Maneuverability theory, which provided a mathematical framework for understanding combat performance — thrust, drag, weight, and speed — and demonstrated precisely why the F-4 lost turning fights. The second was the <strong style="color:#fff;">OODA Loop</strong>: Observe, Orient, Decide, Act. Boyd accelerated his students' OODA loops, and the results were seen in improvements in the air war over North Vietnam.
+    </p>
+
+    <p style="margin-bottom: 2em;">
+      Boyd's insight was that victory in combat belongs not necessarily to the fastest or the most lethal platform, but to the side that can cycle through the observe-orient-decide-act loop <em>faster than its adversary</em>. Disrupt your enemy's OODA loop — through speed, surprise, deception, or superior information — and they collapse into confusion. This framework explains why the missile-centric F-4 failed: its pilots were running a slow OODA loop, bound by rules of engagement requiring visual identification before firing, hampered by unreliable weapons, and stripped of the close-range option (the gun) that would let them act when the loop finally closed. Boyd's Aerial Attack Study showed that an agile fighter could out-maneuver missiles. The technology had outpaced the tactics — until the tactics caught up and rewrote the technology.
+    </p>
+
+    <!-- MUSK SECTION -->
+    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--gold); letter-spacing: 2px; margin: 48px 0 20px;">Musk at the Podium: "The Fighter Jet Era Has Passed"</h3>
+
+    <p style="margin-bottom: 2em;">
+      History repeated itself with remarkable fidelity at the Air Force Association's Air Warfare Symposium in February 2020. In a room packed full of U.S. Air Force personnel, SpaceX founder Elon Musk issued a bold pronouncement: "The fighter jet era has passed. Locally autonomous drone warfare is where it's at, where the future will be." The reaction in the room was immediate — a collective pause. A decade of drone warfare in Iraq, Afghanistan, and Syria had fueled a growing conviction, loudest in the tech sector, that piloted fighters were becoming expensive anachronisms. Why spend $150 million on an F-22, the argument went, when a drone could do the same job at a fraction of the cost and zero pilot risk?
+    </p>
+
+    <p style="margin-bottom: 2em;">
+      Musk returned to the theme in late 2024, posting alongside a video of synchronized Chinese drones: "Meanwhile, some idiots are still building manned fighters like the F-35." He argued that crewed fighter jets are just "an inefficient way to extend the range of missiles and bombs" and that it is "laughably easy" to take down fighter jets, including stealth ones, citing the war in Ukraine as proof. The comments drew support from political allies including Matt Gaetz, who called for abandoning the F-35 entirely in favor of drones. The argument had popular appeal, genuine technological grounding, and very serious implications for the $2+ trillion F-35 program. It also had a powerful historical echo: it was, structurally, the same argument made about the gun in 1955.
+    </p>
+
+    <!-- PULL QUOTE 2 -->
+    <div style="border-left: 3px solid var(--electric); padding: 20px 32px; margin: 40px 0; background: rgba(0,212,255,0.04);">
+      <p style="font-size: 1.2rem; font-style: italic; color: var(--text); margin: 0;">"Elon's hot take about the F-35 being replaced by drones is because he understands technology, but he doesn't understand tactics."</p>
+      <p style="margin-top: 12px; font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 3px; color: var(--electric);">— USAF SERGEANT, quoted in 19FortyFive (2024)</p>
+      <p style="margin-top: 6px; font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; color: var(--text-dim);">Source: 19FortyFive — "Will Drone Swarms Make the F-35 and All Fighter Jets Obsolete?" Dec. 2024</p>
+    </div>
+
+    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--gold); letter-spacing: 2px; margin: 48px 0 20px;">Why the Drone Maximalists Are (Probably) Wrong — For Now</h3>
+
+    <p style="margin-bottom: 2em;">
+      The drone maximalist case has real substance and should not be dismissed. But it has a critical flaw: it confuses the drones that exist today with the drones that would need to exist to replace a fifth-generation fighter. The small drones shown in viral swarm videos are utterly incapable of performing the sorts of missions the F-35 was designed to fly. More fundamentally, the AI that would be required for combat aircraft to truly replace human pilots struggles with rapid OODA loops, electronic warfare, and complex, ambiguous kill chains. Being a fighter pilot requires making split-second decisions repeatedly, sometimes without complete information, and always with a glut of related data pouring in from sensors. This sort of creative problem-solving is outside the realm of what AI can reliably perform.
+    </p>
+
+    <p style="margin-bottom: 2em;">
+      Today's most advanced AI systems for combat aircraft still rely on human intervention in several ways. Specific AI agents can perform specific tasks, like air-to-air combat, but can't perform others, like air-to-ground operations or even landing. And until these systems are robust and trustworthy enough to operate on their own, you have to manage concerns about jamming and other means of electronic warfare that could interfere with autonomous systems in a combat zone. Brig. Gen. Doug Wickert, the USAF commander overseeing AI piloting technology development, put the timeline in perspective: "There may be someday we can completely rely on robotized warfare, but it is centuries away." That is not a dismissal of the drone revolution — it is a precise diagnosis of where the technology actually sits.
+    </p>
+
+    <p style="margin-bottom: 2em;">
+      There is also a strategic asymmetry argument that drone advocates often ignore. Every major military is working to develop countermeasures against individual drones and swarms. These militaries are observing drones in action in Ukraine and using those observations to develop systems to defend ships and bases. The cheap FPV drones that have been devastatingly effective against Russian armor in Ukraine are operating in a permissive electromagnetic environment without serious enemy air defenses. A Chinese J-20 or the hypothetical successor to the S-400 system represents a categorically different threat than a Russian T-72 in a field. The drone that dominates a low-tech conflict may be trivially defeated in a high-end peer competition. Countermeasures are being developed so fast that cheap drones may soon be obsolete for many of the missions they are performing today.
+    </p>
+
+    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--gold); letter-spacing: 2px; margin: 48px 0 20px;">The F-47 as Paradox: The Last Fighter and the First of Something Else</h3>
+
+    <p style="margin-bottom: 2em;">
+      Which brings us to the F-47, and the peculiar position it occupies in this debate. The program is, simultaneously, the strongest argument that manned fighters still matter <em>and</em> the clearest acknowledgment that the pure manned-fighter era may indeed be ending. The Air Force is spending over $20 billion to build what could be — by some analysts' reckoning — the last manned air superiority fighter the United States will ever procure. And it is doing so by baking the drone revolution directly into the aircraft's DNA: the F-47's defining feature is not its stealth or its range or its adaptive engines, but its ability to command fleets of autonomous CCA wingmen. The manned fighter survives, but only by becoming something more than a fighter.
+    </p>
+
+    <p style="margin-bottom: 2em;">
+      Rather than crewed aircraft being replaced completely by unmanned systems, we are seeing a partnership of piloted and autonomous systems, with unmanned aircraft having various levels of trusted autonomy depending on the operational and tactical circumstances. The F-47 is the physical embodiment of this partnership — a human judgment node at the center of a distributed machine swarm. The pilot is not there to pull g's and dogfight anymore; the pilot is there to run Boyd's OODA loop at the highest level of the battlespace, to provide the contextual decision-making and ethical judgment that no current AI can reliably replicate, and to authorize lethal force in the complex, ambiguous environment of a peer conflict that a drone following algorithmic rules simply cannot navigate.
+    </p>
+
+    <p style="margin-bottom: 2em;">
+      And yet the F-47 does not fully escape the historical trap. Its tailless configuration trades the F-22's extraordinary close-in agility for bomber-class stealth and dramatically extended range. Its designers are betting, as the Pentagon bet in the 1950s, that if you can see far enough and shoot far enough, you will never need to turn and fight. The AIM-260's reported 100+ nautical mile range makes the argument more compelling than the Sparrow's 10% hit rate ever did. But history has a way of finding the gap between doctrine and reality. Rules of engagement can force visual identification. Electronic warfare can blind long-range sensors. Communications can be jammed, severing the link between the F-47 and its drone swarm. And in that moment — the moment that the technology fails and the geometry closes — the question of whether the F-47 can fight its way out may become very real.
+    </p>
+
+    <!-- FINAL PULL QUOTE -->
+    <div style="border-left: 3px solid var(--gold); padding: 20px 32px; margin: 40px 0; background: rgba(200,168,75,0.04);">
+      <p style="font-size: 1.2rem; font-style: italic; color: var(--text); margin: 0;">"Despite impressive gains in autonomous technology, manned fighter aircraft will continue to provide the underpinnings of the air superiority mission for decades into the future. Air superiority — the mission that fighter aircraft execute — is literally one of the most important combat capabilities a nation can possess."</p>
+      <p style="margin-top: 12px; font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 3px; color: var(--electric);">— Defense News, March 2020</p>
+      <p style="margin-top: 6px; font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; color: var(--text-dim);">Source: "Sorry, Elon, fighter pilots will fly and fight for a long time" — DefenseNews.com</p>
+    </div>
+
+    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--gold); letter-spacing: 2px; margin: 48px 0 20px;">The Verdict</h3>
+
+    <p style="margin-bottom: 2em;">
+      The fighter is not dead. But it is metamorphosing into something its designers of 1944 or 1965 or even 1997 would struggle to recognize. The F-47 is not, at its core, a faster F-22. It is a networked command platform that happens to be capable of going Mach 2 and evading radar. The pilot inside it is not primarily a stick-and-rudder artist — he or she is a battlefield orchestrator, a human decision node in a lattice of autonomous systems. This represents not the end of the fighter tradition, but its highest evolution: the most capable crewed combat aircraft in history, flying alongside machines that do not fear death, do not tire, and do not flinch.
+    </p>
+
+    <p style="margin-bottom: 2em;">
+      Whether the F-47 is the last of its kind — the final manned air superiority fighter before full autonomy renders the cockpit a historical artifact — remains genuinely unknown. The generals commissioning it today might privately believe it is. But the same could have been said of the F-4 in 1960, the F-15 in 1975, or the F-22 in 2000. Each time the fighter was declared obsolete, it came back stronger. Each time technology promised to replace the pilot, the battlefield found new ways to make the human irreplaceable. Boyd's ghost hovers over the F-47 program with a single, pointed question: what happens when your missiles miss, your drones go dark, and a MiG is at your six — do you have a gun?
+    </p>
+
+    <!-- SOURCES BOX -->
+    <div style="margin-top: 60px; padding: 32px; background: var(--dark3); border: 1px solid var(--border); font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; line-height: 2; color: var(--text-dim);">
+      <div style="color: var(--electric); letter-spacing: 4px; margin-bottom: 16px; font-size: 0.7rem;">// SOURCES &amp; FURTHER READING</div>
+      <div>1. Wikipedia — <em>McDonnell Douglas F-4 Phantom II</em> — en.wikipedia.org/wiki/McDonnell_Douglas_F-4_Phantom_II</div>
+      <div>2. Hankins, Michael W. — <em>The Phantom Menace: The F-4 in Air Combat in Vietnam</em> (UNT Digital Library, 2013)</div>
+      <div>3. PBS Chronicles — <em>John Boyd and His OODA Loop</em>, Season 2, Episode 13 — pbs.org</div>
+      <div>4. Air &amp; Space Forces Magazine — <em>The Fighter Jet Era Has Passed</em> (Apr. 2020) — airandspaceforces.com</div>
+      <div>5. 19FortyFive — <em>Will Drone Swarms Make the F-35 and All Fighter Jets Obsolete?</em> (Dec. 2024) — 19fortyfive.com</div>
+      <div>6. DefenseNews — <em>Sorry, Elon, Fighter Pilots Will Fly and Fight for a Long Time</em> (Mar. 2020) — defensenews.com</div>
+      <div>7. Sandboxx News — <em>Is Elon Musk Right That Fighter Jets Have Become Obsolete?</em> (Dec. 2024) — sandboxx.us</div>
+      <div>8. The Heritage Foundation — <em>Drones Don't Render Traditional Weaponry Obsolete</em> — heritage.org</div>
+      <div>9. National Interest — <em>Dead Stealth: What Happens if Fighters Are Obsolete?</em> — nationalinterest.org</div>
+      <div>10. Simple Flying — <em>USAF General: Why AI-Piloted Fighter Jets Are Still "Centuries Away"</em> (Dec. 2024) — simpleflying.com</div>
+      <div>11. National Security Journal — <em>Forget the F-47: Will Drones Make Fighter Jets Obsolete?</em> (Sep. 2025) — nationalsecurityjournal.org</div>
+      <div>12. Esprit de Corps — <em>John Boyd and the F-35</em> — espritdecorps.ca</div>
+      <div>13. 366th Fighter Association — <em>F-4 Phantom II History</em> — 366thgunfighters.org</div>
+      <div>14. Key Aero — <em>How Effective Was the F-4 Phantom in Vietnam?</em> — key.aero</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div>
+    <div class="footer-brand">F-47 // NGAD</div>
+    <div style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--text-dim);letter-spacing:2px;margin-top:8px;">AMERICA'S SIXTH-GENERATION AIR DOMINANCE PLATFORM</div>
+  </div>
+  <div class="footer-info">
+    Sources: DoD, USAF, Wikipedia, DefenseScoop,<br>
+    Breaking Defense, 19FortyFive, Air &amp; Space Forces Magazine<br>
+    Report compiled March 2026 · All specifications subject to classification
+  </div>
+</footer>
+
+<div class="classified-banner">⬛ PROGRAM STATUS: ACTIVE DEVELOPMENT — FIRST FLIGHT TARGET 2028 — CONTRACTOR: BOEING DEFENSE, ST. LOUIS MO ⬛</div>
+
+<script>
+  // Intersection Observer for scroll reveals
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+
+        // Animate capability bars
+        if (entry.target.id === 'cap-grid' || entry.target.closest('#cap-grid')) {
+          document.querySelectorAll('.cap-bar-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width;
+          });
+        }
+
+        // Animate cost bars
+        if (entry.target.id === 'cost-bars' || entry.target.closest('#cost-bars')) {
+          document.querySelectorAll('.cost-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width;
+          });
+        }
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal, .tl-item').forEach(el => observer.observe(el));
+
+  // Special observer for capability bars
+  const capObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('.cap-bar-fill').forEach(bar => {
+          setTimeout(() => { bar.style.width = bar.dataset.width; }, 200);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const capGrid = document.getElementById('cap-grid');
+  if (capGrid) capObserver.observe(capGrid);
+
+  // Cost bars observer
+  const costObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('.cost-fill').forEach(bar => {
+          setTimeout(() => { bar.style.width = bar.dataset.width; }, 300);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const costBars = document.getElementById('cost-bars');
+  if (costBars) costObserver.observe(costBars);
+
+  // Timeline observer
+  const tlObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.tl-item').forEach(el => tlObserver.observe(el));
+</script>
+</body>
+</html>
